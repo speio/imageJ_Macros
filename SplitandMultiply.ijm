@@ -10,7 +10,7 @@ list = getFileList(input);
 
 
 //looping over each file in the input directory
-for(i = 0; i < (list.length-40); i++)
+for(i = 0; i < list.length; i++)
 	splitting(input, output, list[i]);
 	
 function splitting(input, output, filename) {
