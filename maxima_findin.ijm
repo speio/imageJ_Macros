@@ -23,6 +23,13 @@ function stackmaxima(inpath, outpath, filename) {
 	run("Red");
 	
 	//Allowing user to play with noise tolerance before setting
+	//Problem here is that if user selects count (which it defaults to after one run through 
+	//The loop) then it appends that maxima count to the results list, and adds the same count
+	//again when the maxima finding is run in the for loop in line 64. Need to either limit
+	//user choice as not to include count and list options in dialog
+	//while still allowing them to utilize the 'preview point selection' feature
+	//or find a way to ensure that the output from such abberant measurements are deleted
+	
 	waitForUser("Decide first, in this prompt which noise tolerance is best by selecting 'preview point selection'.\n DO NOT SELECT 'count'");
 	run("Find Maxima...");
 	close();
@@ -33,7 +40,7 @@ function stackmaxima(inpath, outpath, filename) {
 	run("Red");	
 	
 	Dialog.create("Find Maxima");
-	Dialog.addNumber("Noise Tolerance:", 1000);
+	Dialog.addNumber("Noise Tolerance:", 0);
 	Dialog.addChoice("Output Type:", newArray("Count"));
 			//^^^can add more output types here for other purposes
 	Dialog.addCheckbox("Exclude Edge Maxima", false);
@@ -53,25 +60,30 @@ function stackmaxima(inpath, outpath, filename) {
 	input = getImageID();
 	n = nSlices();
 
-	//erro check sort of thing 
-	print(filename + "-" + n);
-	
+	//error check sort of thing since results list is continually appended upon
+	//this keeps printing which file gave how many data points and at which noise tolerance
+	print(filename + "-" + n + "-" + tolerance);
+
+	//looping over each slive given inputted parameters
 	for (i=1; i <=n; i++) {
 		showProgress(i,n);
 		selectImage(input);
 		setSlice(i);
-		run("Find Maxima...", "noise="+ tolerance +" output=["+type+"]"+options);
-		if (i==1)
+		run("Find Maxima...", "noise=&tolerance  output=&type" + options);
+		//
+		if (i==1){
 			output = getImageID();
-			else if (type!="Count") {
-				run("Select All");
-				run("Copy");
-				close();
-				selectImage(output);
-				run("Add Slice");
-				run("Paste");
-				
-			}
+			print(output);
+		}	
+		else if (type!="Count") {
+			run("Select All");
+			run("Copy");
+			close();
+			selectImage(output);
+			run("Add Slice");
+			run("Paste");
+			
+		}
 
 	}
 	
