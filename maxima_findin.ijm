@@ -1,9 +1,9 @@
 //define the directory wherein lie the images to be split
 //make sure directory contains only those images you want to run into the macro
 //no other directories or other odd files should be present
-input = "/Users/genovillafano/Dropbox/1Current/AG_Hagedorn/140710-Dilute-and-HL5c-Wpeptide-fixed/Worked-Images/"
-//define the directory whereto worked images should be saved
-output = "/Users/genovillafano/Dropbox/1Current/AG_Hagedorn/Points/"
+input = "/Users/genovillafano/Dropbox/1Current/AG_Hagedorn/140716-NewPeptidevsOld-ABD-test/Worked-Images/"
+//define where to save the output
+output = "/Users/genovillafano/Dropbox/1Current/AG_Hagedorn/140716-NewPeptidevsOld-ABD-test/Points/"
 //gets list of file names given directory assigned to input and makes a list
 
 list = getFileList(input); 
@@ -30,29 +30,31 @@ function stackmaxima(inpath, outpath, filename) {
 	//while still allowing them to utilize the 'preview point selection' feature
 	//or find a way to ensure that the output from such abberant measurements are deleted
 	
-	waitForUser("Decide first, in this prompt which noise tolerance is best by selecting 'preview point selection'.\n DO NOT SELECT 'count'");
+	//waitForUser("Decide first, in this prompt which noise tolerance is best by selecting 'preview point selection'.\n DO NOT SELECT 'count'");
+	setSlice(2);
+	run("Find Maxima...");
+	setSlice(5);
 	run("Find Maxima...");
 	close();
-	waitForUser("Now input noise tolerance for use on all slices.");
+	//waitForUser("Now input noise tolerance for use on all slices.");
 	
 	
 	open(inpath + filename);
 	run("Red");	
 	
 	Dialog.create("Find Maxima");
-	Dialog.addNumber("Noise Tolerance:", 0);
-	Dialog.addChoice("Output Type:", newArray("Count"));
-			//^^^can add more output types here for other purposes
-	Dialog.addCheckbox("Exclude Edge Maxima", false);
-	//Dialog.addCheckbox("Preview", false);
-	Dialog.addCheckbox("Light Background", false);
-	Dialog.show();
-	tolerance = Dialog.getNumber();
-	type = Dialog.getChoice();
-	exclude = Dialog.getCheckbox();
-	light = Dialog.getCheckbox();
-	
-	options = " ";
+		Dialog.addNumber("Noise Tolerance:", 0);
+		Dialog.addChoice("Output Type:", newArray("Count"));
+				//^^^can add more output types here for other purposes
+		Dialog.addCheckbox("Exclude Edge Maxima", false);
+		//Dialog.addCheckbox("Preview", false);
+		Dialog.addCheckbox("Light Background", false);
+		Dialog.show();
+			tolerance = Dialog.getNumber();
+			type = Dialog.getChoice();
+			exclude = Dialog.getCheckbox();
+			light = Dialog.getCheckbox();
+			options = " ";
 	if (exclude) options = options + " exclude";
 	if (light) options = options + " light";
 	
