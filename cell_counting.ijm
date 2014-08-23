@@ -72,8 +72,8 @@ if(folder == true){
 	for(i = 0; i < (list.length); i++){
 		a = i ; 
 		count(list[a], min, max, min_c, max_c, drk, composite_bool, Z, preview);
-			//error check print out order that programme counted files
-			print(list[a] + " %%% " + a );
+		//error check print out order that programme counted files
+		print(list[a] + " %%% " + a );
 		saveAs("Tiff", output + list[a]);
 		close();
 		close();
@@ -93,13 +93,13 @@ function count(filename, min, max, min_c, max_c, drk, composite_bool, Z, preview
 
 	//is composite?
 	if(composite_bool == true){
-	Stack.setDisplayMode("composite");
+		Stack.setDisplayMode("composite");
 	}
 	
 	//is Z stack?
 	if(Z == true){
-		 run("Z Project...", "start="+1+" stop="+nSlices+" projection=[Sum Slices]"); 
-		}
+		run("Z Project...", "start="+1+" stop="+nSlices+" projection=[Sum Slices]"); 
+	}
 		
 	//preparing image
 	run("RGB Color", "frames keep");
