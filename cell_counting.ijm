@@ -18,8 +18,8 @@ Dialog.create("Choose counting parameters for image(s)");
 	Dialog.addCheckbox("Dark Background", true);
 	Dialog.addCheckbox("Set Threshold Manually", false);
 	Dialog.addChoice("Thresholding method", newArray("Default", "Huang", "Intermodes", "IsoData", "IJ_IsoData",
-	"Li", "MaxEntropy", "Mean", "MinError", "Minimum", "Moments", "Otsu", "Percentile", "RenyiEntropy",
-	"Shanbhag", "Triangle", "Yen"));
+		"Li", "MaxEntropy", "Mean", "MinError", "Minimum", "Moments", "Otsu", "Percentile", "RenyiEntropy","Shanbhag",
+		"Triangle", "Yen"));
 	Dialog.show();
 		min = Dialog.getNumber();
 		max = Dialog.getNumber();
